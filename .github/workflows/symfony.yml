@@ -37,11 +37,10 @@ jobs:
           ${{ runner.os }}-php-
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Create Database
+    - name: Create MySQL Database
       run: |
-        mkdir -p data
-        touch data/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+        mysql -u root -h 127.0.0.1 -P 3306 -e "CREATE DATABASE IF NOT EXISTS student DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    - name: Start Symfony server
       env:
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-      run: vendor/bin/phpunit
+        DATABASE_URL: "mysql://root:@127.0.0.1:3306/student?serverVersion=8.0.31&charset=utf8mb4"
+      run: symfony server:start
