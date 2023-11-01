@@ -48,6 +48,7 @@ jobs:
       run: |
         mysql -h db4free.net -P 3306 -u studentstudi -p12345678 -e "CREATE DATABASE IF NOT EXISTS studentstudi DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
     - name: Start Symfony server
-      env:
-        DATABASE_URL: "mysql://studentstudi:12345678@db4free.net:3306/studentstudi?serverVersion=8.2.0&charset=utf8mb4"
-      run: symfony server:start
+        env:
+          DATABASE_URL: "mysql://studentstudi:12345678@db4free.net:3306/studentstudi?serverVersion=8.2.0&charset=utf8mb4"
+        run: |
+          ~/.symfony*/bin/symfony server:start
